@@ -7,6 +7,8 @@ const loginUserSchema = require("./loginUserSchema");
 
 const updateSubscriptionSchema = require("./updateSubscriptionSchema");
 
+const isInTheArray = require("./isInTheArray");
+
 module.exports = {
   addContactSchema,
   updateContactSchema,
@@ -16,4 +18,6 @@ module.exports = {
   loginUserSchema,
 
   updateSubscriptionSchema,
+
+  isInTheArray,
 };

@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(
   bodyParser.urlencoded({ extended: true })
 );
+app.use(express.static("public")); //allows to get static files from /public folder
 
 app.use("/", mainRouter);
 app.use("/users", usersRouter);

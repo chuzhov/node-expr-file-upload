@@ -1,6 +1,6 @@
 const Joi = require("joi");
 const {
-  userSubscriptionTypes,
+  USER_SUBSCRIPTION_TYPES,
 } = require("../../models");
 
 const addUserSchema = Joi.object().keys({
@@ -9,7 +9,7 @@ const addUserSchema = Joi.object().keys({
     .email({ multiple: false })
     .required(),
   subscription: Joi.string().valid(
-    ...userSubscriptionTypes
+    ...USER_SUBSCRIPTION_TYPES
   ),
 });
 
