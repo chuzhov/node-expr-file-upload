@@ -1,8 +1,5 @@
-const mainPage = require("../../templates/mainPage");
-
 const getMainPage = async (req, res) => {
-  const markup = mainPage();
-  res.send(markup);
+  res.render("pages/index");
 };
 
 module.exports = getMainPage;
