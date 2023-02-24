@@ -8,9 +8,10 @@ const {
 
 const removeUser = async (req, res) => {
   const { userId } = req.params;
-  const dbUserAnswer = await User.deleteOne({
-    _id: userId,
-  });
+  const dbUserAnswer =
+    await User.findOneAndDelete({
+      _id: userId,
+    });
   if (!dbUserAnswer)
     throw HttpError(
       404,
@@ -18,6 +19,8 @@ const removeUser = async (req, res) => {
     );
   const dbUsersContactsAnswer =
     await Contact.deleteMany({ owner: userId });
+
+  //  await fs.unlink(origin);
 
   res.json({
     "User deleted": dbUserAnswer,
