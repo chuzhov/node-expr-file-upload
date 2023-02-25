@@ -1,13 +1,13 @@
 const Joi = require("joi");
 const {
-  userSubscriptionTypes,
+  USER_SUBSCRIPTION_TYPES,
 } = require("../../models");
 
 const updateSubscriptionSchema =
   Joi.object().keys({
     subscription: Joi.string()
       .required()
-      .valid(...userSubscriptionTypes),
+      .valid(...USER_SUBSCRIPTION_TYPES),
   });
 
 module.exports = updateSubscriptionSchema;

@@ -9,6 +9,7 @@ const {
   auth,
   adminAuth,
   emailConfirmation,
+  uploadAvatar,
 } = require("../../middlewares");
 
 const schema = require("../validation/");
@@ -54,6 +55,13 @@ router.delete(
   "/:userId",
   adminAuth,
   ctrl.removeUser //and all user's contacts...
+);
+
+router.patch(
+  "/avatars",
+  auth,
+  uploadAvatar.single("avatar"),
+  ctrl.updateUsersAvatar
 );
 
 module.exports = router;

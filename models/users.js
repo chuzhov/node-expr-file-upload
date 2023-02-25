@@ -1,13 +1,29 @@
 const { Schema, model } = require("mongoose");
+const gravatar = require("gravatar");
 
 //in this case, getting 'admin' role is possible only manually by mongoDB admin
 const usersRoles = ["customer", "admin"];
 
-const userSubscriptionTypes = [
+const USER_SUBSCRIPTION_TYPES = [
   "starter",
   "pro",
   "business",
 ];
+const defSubscriptionPlanIdx = 0;
+
+const USER_AVATAR_PARAMS = {
+  dimensions: {
+    width: 250,
+    height: 250,
+  },
+  maxFileSize: 100000,
+  acceptableFileTypes: [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+  ],
+};
 
 const userSchema = Schema(
   {
@@ -27,6 +43,15 @@ const userSchema = Schema(
       required: true,
       unique: true,
     },
+    avatarURL: {
+      type: String,
+      required: true,
+      default: function () {
+        return gravatar.url(this.email, {
+          s: USER_AVATAR_PARAMS.dimensions.width.toString(),
+        });
+      },
+    },
     isEmailConfirmed: {
       type: Boolean,
       default: false,
@@ -34,7 +59,7 @@ const userSchema = Schema(
     role: {
       type: String,
       enum: usersRoles,
-      default: usersRoles[0], //to get admin role you schould edit this field manually
+      default: usersRoles[defSubscriptionPlanIdx], //to get admin role you schould edit this field manually
       validate: {
         validator: function (value) {
           value === "admin" ? false : true;
@@ -45,8 +70,11 @@ const userSchema = Schema(
     },
     subscription: {
       type: String,
-      enum: userSubscriptionTypes,
-      default: userSubscriptionTypes[0],
+      enum: USER_SUBSCRIPTION_TYPES,
+      default:
+        USER_SUBSCRIPTION_TYPES[
+          defSubscriptionPlanIdx
+        ],
     },
     token: String,
   },
@@ -63,4 +91,8 @@ userSchema.methods.validateSchema = function () {
 
 const User = model("user", userSchema);
 
-module.exports = { User, userSubscriptionTypes };
+module.exports = {
+  User,
+  USER_SUBSCRIPTION_TYPES,
+  USER_AVATAR_PARAMS,
+};
