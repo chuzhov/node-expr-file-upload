@@ -1,4 +1,4 @@
-# GoIT Node.js Course Homework #4
+# Node.js sample server
 
 Продовження створення REST API для роботи з колекцією контактів.
 
